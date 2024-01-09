@@ -1,8 +1,6 @@
 package com.innotech.ordersystem.controller;
 
-import com.innotech.ordersystem.model.Item;
 import com.innotech.ordersystem.model.StockMovement;
-import com.innotech.ordersystem.service.ItemServiceImpl;
 import com.innotech.ordersystem.service.StockMovementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +45,6 @@ public class StockMovementController {
     @PutMapping("/alterar/{id}")
     public ResponseEntity<StockMovement> atualizar(@PathVariable Long id, @RequestBody StockMovement stockMovement) {
         StockMovement stockMovementSalva = stockMovementServiceImpl.atualizar(id, stockMovement);
-        //return ResponseEntity.ok(stockMovementSalva);
         return stockMovementSalva !=null ? ResponseEntity.ok(stockMovementSalva) : ResponseEntity.notFound().build();
     }
 
