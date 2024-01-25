@@ -17,12 +17,10 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-
     @GetMapping("/listartodos")
     public List<User> listar(){
         return userServiceImpl.listarTodos();
     }
-
 
     @GetMapping("/pesquisar-por-id/{id}")
     public ResponseEntity<Optional<User>> pesquisarPorId(@PathVariable Long id){

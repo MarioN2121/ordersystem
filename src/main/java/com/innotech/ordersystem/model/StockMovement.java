@@ -1,13 +1,12 @@
 package com.innotech.ordersystem.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data()
 @NoArgsConstructor
@@ -20,13 +19,17 @@ public class StockMovement {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private LocalDate creationDate;
+    private Long ig;
+    private LocalDateTime movementDate;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id1")
-    private Item item;
+    private Long orderId;
+    private String orderName;
+    private int orderQuantity;
 
-    private int quantity;
+    private Long stockId;
+    private int stockQuantity;
+
+
+
 
 }

@@ -31,7 +31,6 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public List<Item> pesquisarPorNome(String name) {
-       // List<Item> items = itemRepository.findItems(name);
         List<Item> items = itemRepository.findByNameContaining(name);
         return items;
     }

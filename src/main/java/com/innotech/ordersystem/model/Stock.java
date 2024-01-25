@@ -1,7 +1,6 @@
 package com.innotech.ordersystem.model;
 
-import com.innotech.ordersystem.utils.EmailStatus;
-import com.innotech.ordersystem.utils.OrderStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "order_2")
-public class Order {
+@Table(name = "stock")
+public class Stock {
 
     @EqualsAndHashCode.Include
     @Id
@@ -29,17 +28,5 @@ public class Order {
     private Item item;
 
     private int quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private OrderStatus orderStatus;
-
-    private EmailStatus emailStatus;
-
-
-
-
 
 }

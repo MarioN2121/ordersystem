@@ -11,13 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/stockMovements")
+@RequestMapping("/stockmovements")
 public class StockMovementController {
-
 
     @Autowired
     private StockMovementServiceImpl stockMovementServiceImpl;
-
 
     @GetMapping("/listartodos")
     public List<StockMovement> listar(){
@@ -30,22 +28,16 @@ public class StockMovementController {
         return stockMovement !=null ? ResponseEntity.ok(stockMovement) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/pesquisar-por-nome/{nome}")
-    public ResponseEntity<List<StockMovement>> pesquisarPorNome(@PathVariable String nome){
-        List<StockMovement> stockMovements = stockMovementServiceImpl.pesquisarPorNome(nome);
-        return stockMovements !=null ? ResponseEntity.ok(stockMovements) : ResponseEntity.notFound().build();
-    }
-
     @PostMapping("/criar")
     public ResponseEntity<StockMovement> criar(@RequestBody StockMovement stockMovement){
-        StockMovement stockMovementSalva = stockMovementServiceImpl.criar(stockMovement);
-        return ResponseEntity.status(HttpStatus.CREATED).body(stockMovementSalva);
+        StockMovement stockMovemenSalva = stockMovementServiceImpl.criar(stockMovement);
+        return ResponseEntity.status(HttpStatus.CREATED).body(stockMovemenSalva);
     }
 
     @PutMapping("/alterar/{id}")
     public ResponseEntity<StockMovement> atualizar(@PathVariable Long id, @RequestBody StockMovement stockMovement) {
-        StockMovement stockMovementSalva = stockMovementServiceImpl.atualizar(id, stockMovement);
-        return stockMovementSalva !=null ? ResponseEntity.ok(stockMovementSalva) : ResponseEntity.notFound().build();
+        StockMovement stockMovemenSalva = stockMovementServiceImpl.atualizar(id, stockMovement);
+        return stockMovemenSalva !=null ? ResponseEntity.ok(stockMovemenSalva) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/remover/{id}")

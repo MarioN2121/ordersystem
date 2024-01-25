@@ -36,6 +36,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order criar(Order order) {
+        //TODO ... - when an order is created, it should try to satisfy it with the current stock.;
+        // se a Order for superior ao stock entao faz subtração e fica em negativo
         Order orderSalva = orderRepository.save(order);
         return orderSalva;
     }

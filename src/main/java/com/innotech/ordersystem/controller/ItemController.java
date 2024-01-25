@@ -17,8 +17,6 @@ import java.util.Optional;
 @RequestMapping("/items")
 public class ItemController {
 
-
-
     @Autowired
     private ItemServiceImpl itemServiceImpl;
 
