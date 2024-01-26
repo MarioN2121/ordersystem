@@ -1,6 +1,5 @@
 package com.innotech.ordersystem.service;
 
-import com.innotech.ordersystem.model.Item;
 import com.innotech.ordersystem.model.Stock;
 import com.innotech.ordersystem.repository.StockRepository;
 import org.springframework.beans.BeanUtils;
@@ -46,6 +45,10 @@ public class StockServiceImpl implements StockService{
     @Override
     public void remover(Long id) {
         stockRepository.deleteById(id);
+    }
+    @Override
+    public Stock buscarStockPorItemId(Long ItemId){
+        return stockRepository.findByItemId(ItemId);
     }
 
     private Stock buscarStockPorId(Long id){

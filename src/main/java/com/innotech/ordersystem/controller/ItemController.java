@@ -2,9 +2,7 @@ package com.innotech.ordersystem.controller;
 
 
 import com.innotech.ordersystem.model.Item;
-import com.innotech.ordersystem.model.User;
 import com.innotech.ordersystem.service.ItemServiceImpl;
-import com.innotech.ordersystem.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

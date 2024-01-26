@@ -15,4 +15,6 @@ public interface StockService {
     public Stock atualizar(Long id, Stock stock);
     public void remover(Long id);
 
+    public Stock buscarStockPorItemId(Long ItemId);
+
 }

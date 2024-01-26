@@ -19,15 +19,15 @@ public class StockMovement {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ig;
+    private Long id;
     private LocalDateTime movementDate;
 
     private Long orderId;
     private String orderName;
-    private int orderQuantity;
+    private int orderQuantity; //quantidade obrigatória
 
     private Long stockId;
-    private int stockQuantity;
+    private int stockQuantity; //quantidade por satisfazer
 
 
 

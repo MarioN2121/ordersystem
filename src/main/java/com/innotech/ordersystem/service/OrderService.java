@@ -1,6 +1,7 @@
 package com.innotech.ordersystem.service;
 
 import com.innotech.ordersystem.model.Order;
+import com.innotech.ordersystem.model.Stock;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface OrderService {
     public Order criar(Order order);
     public Order atualizar(Long id, Order order);
     public void remover(Long id);
+
 
 }

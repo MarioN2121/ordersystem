@@ -48,7 +48,7 @@ public class StockMovementServiceImpl implements StockMovementService{
     public StockMovement atualizar(Long id, StockMovement stockMovement) {
         StockMovement stockMovementSalva = buscarItemPorId(id);
         if(stockMovementSalva !=null){
-            stockMovement.setIg(id);
+            stockMovement.setId(id);
             BeanUtils.copyProperties(stockMovement, stockMovementSalva);
             stockMovementSalva = stockMovementRepository.save(stockMovementSalva);
         }
