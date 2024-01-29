@@ -30,4 +30,6 @@ public class EmailSendController {
         return new ResponseEntity<>(emailSend, HttpStatus.CREATED);
     }
 
+
+
 }

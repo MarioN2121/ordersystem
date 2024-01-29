@@ -1,12 +1,14 @@
 package com.innotech.ordersystem.service;
 
 import com.innotech.ordersystem.model.Stock;
+import com.innotech.ordersystem.model.StockMovement;
 import com.innotech.ordersystem.repository.StockRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,9 @@ public class StockServiceImpl implements StockService{
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Autowired
+    private StockMovementServiceImpl stockMovementServiceImpl;
 
     @Override
     public List<Stock> listarTodos() {
@@ -36,6 +41,31 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public Stock atualizar(Long id, Stock stock) {
+        //TODO ... AO ATUALIZAR O STOCK DEVEMOS VERIFICAR SE ESTAMOS A ACRESCENTAR O VALOR DA QUANTIDADE.
+        //TODO ... SE SIM ENTAO ATUALIZAMOS O STOCKMOVEMENT, SE O STOCK ENCONTRAVA-SE NEGATIVO, ENTAO DEVEMOS TAMBEM
+        //TODO ... ATUALIZAR A ORDER E ENVIAR O EMAIL A INFORMAR.
+
+        Stock stockAntigo = buscarStockPorId(id);
+        int stockQuantidade = stockAntigo.getQuantity();
+
+        stockAntigo.setQuantity(stock.getQuantity()+stockQuantidade);
+        stockRepository.save(stockAntigo);
+        StockMovement stockMovement = new StockMovement();
+        stockMovement.setMovementDate(LocalDateTime.now());
+        stockMovement.setStockId(stockAntigo.getId());
+        stockMovement.setStockQuantity(stock.getQuantity()+stockQuantidade);
+
+        if(stockQuantidade>=0){
+
+            stockMovementServiceImpl.criar(stockMovement);
+        }else{
+
+            //ir buscar a order correspondente
+            stockMovementServiceImpl.criar(stockMovement);
+            //enviar email
+
+        }
+
         Stock stockSalva = buscarStockPorId(id);
         stock.setId(id);
         BeanUtils.copyProperties(stock, stockSalva);

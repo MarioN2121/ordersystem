@@ -1,5 +1,6 @@
 package com.innotech.ordersystem.controller;
 
+import com.innotech.ordersystem.model.Stock;
 import com.innotech.ordersystem.model.StockMovement;
 import com.innotech.ordersystem.service.StockMovementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,23 @@ public class StockMovementController {
     }
 
     //TODO ... ACRESCENTAR MAIS METODOS PARA AS OPERAÇOES DE ORDER(COMPRA)
+
+    @GetMapping("/orders/pesquisar-por-id/{id}")
+    public ResponseEntity<List<StockMovement>> pesquisarPorOrderId(@PathVariable Long id){
+        List<StockMovement> stockMovement = stockMovementServiceImpl.pesquisarPorOrderId(id);
+        return stockMovement !=null ? ResponseEntity.ok(stockMovement) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/stocks/pesquisar-por-id/{id}")
+    public ResponseEntity<List<StockMovement>> pesquisarPorStockId(@PathVariable Long id){
+        List<StockMovement> stockMovement = stockMovementServiceImpl.pesquisarPorStockId(id);
+        return stockMovement !=null ? ResponseEntity.ok(stockMovement) : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/atualizar/stock/{id}")
+    public ResponseEntity<StockMovement> atualizarStock(@PathVariable Long id, @RequestBody Stock stock){
+        StockMovement stockMovement = stockMovementServiceImpl.atualizarStock(id,stock.getQuantity());
+        return stockMovement != null ? ResponseEntity.ok(stockMovement) : ResponseEntity.notFound().build();
+    }
 
 }
