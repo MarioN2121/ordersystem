@@ -24,10 +24,6 @@ public class StockMovementServiceImpl implements StockMovementService{
     private StockRepository stockRepository;
     @Autowired
     private OrderRepository orderRepository;
-
-    //@Autowired
-    //private OrderServiceImpl orderServiceImpl;
-
     @Autowired
     private EmailSendServiceImpl emailSendServiceImpl;
 
@@ -67,8 +63,6 @@ public class StockMovementServiceImpl implements StockMovementService{
         stockMovementRepository.deleteById(id);
     }
 
-    //TODO ... ACRESCENTAR MAIS METODOS PARA AS OPERAÇOES DE ORDER(COMPRA)
-
     private StockMovement buscarItemPorId(Long id){
         StockMovement stockSalva = stockMovementRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
         if(stockSalva == null){
@@ -94,16 +88,13 @@ public class StockMovementServiceImpl implements StockMovementService{
         Stock stockSalvo = stockRepository.getById(stockId);
         if(stockSalvo!=null){
             if(stockSalvo.getQuantity()<0){
-                //stockMovement = carregaStockAndOrder(stockSalvo,quantidade);
-                //carregaStockAndOrderAux(stockSalvo,quantidade);
-                System.out.println("ATUALIZACAO DO STOCK NEGATIVO : "+stockSalvo.getQuantity());
+                stockMovement = carregaStockAndOrder(stockSalvo,quantidade);
             }else{
                stockMovement = carregaStock(stockSalvo, quantidade);
             }
         }
         return stockMovement;
     }
-
 
     private StockMovement carregaStock(Stock stockSalvo, int quantidade){
         stockSalvo.setQuantity(stockSalvo.getQuantity()+quantidade);
@@ -117,10 +108,8 @@ public class StockMovementServiceImpl implements StockMovementService{
     }
 
     private StockMovement carregaStockAndOrder(Stock stock, int quantidade){
-        StockMovement stockMovementSalvo = null;
-        //stockMovementRepository.findByStockIdAndStockQuantity(stock.getId(), stock.getQuantity());
-        //System.out.println("stockMovementSalvo STOCK ID: "+stock.toString());
 
+        StockMovement stockMovementSalvo = null;
         List<StockMovement> stockMovements = stockMovementRepository.findByStockId(stock.getId());
         for(StockMovement stm : stockMovements){
             if(stm.getStockQuantity() == stock.getQuantity()){
@@ -128,34 +117,21 @@ public class StockMovementServiceImpl implements StockMovementService{
             }
         }
 
-       // System.out.println("stockMovementSalvo ORDER ID: "+stockMovementSalvo.toString());
         int valorAtualizado = stock.getQuantity()+quantidade;
         stock.setQuantity(valorAtualizado);
         stockRepository.save(stock);
-        stockMovementSalvo.setStockQuantity(quantidade);
+        stockMovementSalvo.setStockQuantity(valorAtualizado);
         StockMovement stockMovement = stockMovementRepository.save(stockMovementSalvo);
-
-        System.out.println("ORDER ID: "+stockMovementSalvo.getOrderId());
         Long idOrder = stockMovementSalvo.getOrderId();
-        //Order order = orderRepository.findById(stockMovementSalvo.getOrderId()).orElseThrow(() -> new EmptyResultDataAccessException(1));
-        //TODO -... REVER ESTE METODO E REPARAR A SITUAÇÃO ...
-        Order order = orderRepository.findById(idOrder).orElse(null);
-
+        Order order = orderRepository.findById(stockMovementSalvo.getOrderId()).orElseThrow(() -> new EmptyResultDataAccessException(1));
         carregaOrder(order,valorAtualizado);
-
 
         return stockMovementSalvo;
     }
 
-
-
     public Order carregaOrder(Order order, int valorCalcualdo) {
         Order orderSalva = null;
         EmailSend emailSendSalva = null;
-
-        System.out.println("*** VALOR PROCURADO: "+order.getUser().getName());
-        System.out.println("*** VALOR PROCURADO: "+order.getUser().getEmail());
-
         if( valorCalcualdo >= 0){
             EmailSend emailSend =carregaEmailDataCompleto(order.getUser());
             emailSendSalva = emailSendServiceImpl.sendEmail(emailSend);
@@ -171,7 +147,6 @@ public class StockMovementServiceImpl implements StockMovementService{
         }
         return orderSalva;
     }
-
 
     private EmailSend carregaEmailDataCompleto(User user){
         EmailSend emailSend = new EmailSend();
@@ -195,39 +170,11 @@ public class StockMovementServiceImpl implements StockMovementService{
         return emailSend;
     }
 
-    /*
-    private StockMovement carregaStockAndOrder(Stock stock, int quantidade){
-        StockMovement stockMovementSalvo = stockMovementRepository.findByStockIdAndStockQuantity(stock.getId(), stock.getQuantity());
-        Order order = orderRepository.findById(stockMovementSalvo.getOrderId()).orElseThrow(() -> new EmptyResultDataAccessException(1));
-        int valorAtualizado = stock.getQuantity()+quantidade;
-        stock.setQuantity(valorAtualizado);
-        stockRepository.save(stock);
-
-        StockMovement stockMovementNew = new StockMovement();
-        stockMovementNew.setMovementDate(LocalDateTime.now());
-        stockMovementNew.setStockId(stock.getId());
-        stockMovementNew.setStockQuantity(valorAtualizado);
-        stockMovementNew.setOrderId(order.getId());
-        stockMovementNew.setOrderName(stockMovementSalvo.getOrderName());
-
-        if(valorAtualizado>=0){
-            EmailSend emailSend = orderServiceImpl.carregaEmailDataCompleto(order.getUser());
-            EmailSend emailSendSalva = emailSendServiceImpl.sendEmail(emailSend);
-            order.setEmailStatus(emailSendSalva.getEmailStatus());
-            order.setOrderStatus(OrderStatus.Completed);
-            Order orderSalva = orderRepository.save(order);
-        }
-        StockMovement stockMovement = stockMovementRepository.save(stockMovementNew);
-
-        return stockMovement;
-    }*/
-
     public List<StockMovement> carregaStockAndOrderAux(Stock stock, int quantidade){
         List<StockMovement> stockMovementSalvo = stockMovementRepository.findByStockId(stock.getId());
         System.out.println("TESTE DE PESQUISA: "+stockMovementSalvo.toString());
 
         return stockMovementSalvo;
     }
-
 
 }

@@ -1,9 +1,6 @@
 package com.innotech.ordersystem.service;
 
-import com.innotech.ordersystem.model.EmailSend;
 import com.innotech.ordersystem.model.Order;
-import com.innotech.ordersystem.model.Stock;
-import com.innotech.ordersystem.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

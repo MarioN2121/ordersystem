@@ -41,9 +41,6 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public Stock atualizar(Long id, Stock stock) {
-        //TODO ... AO ATUALIZAR O STOCK DEVEMOS VERIFICAR SE ESTAMOS A ACRESCENTAR O VALOR DA QUANTIDADE.
-        //TODO ... SE SIM ENTAO ATUALIZAMOS O STOCKMOVEMENT, SE O STOCK ENCONTRAVA-SE NEGATIVO, ENTAO DEVEMOS TAMBEM
-        //TODO ... ATUALIZAR A ORDER E ENVIAR O EMAIL A INFORMAR.
 
         Stock stockAntigo = buscarStockPorId(id);
         int stockQuantidade = stockAntigo.getQuantity();
@@ -56,14 +53,9 @@ public class StockServiceImpl implements StockService{
         stockMovement.setStockQuantity(stock.getQuantity()+stockQuantidade);
 
         if(stockQuantidade>=0){
-
             stockMovementServiceImpl.criar(stockMovement);
         }else{
-
-            //ir buscar a order correspondente
             stockMovementServiceImpl.criar(stockMovement);
-            //enviar email
-
         }
 
         Stock stockSalva = buscarStockPorId(id);

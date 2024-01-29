@@ -24,10 +24,10 @@ public class StockMovement {
 
     private Long orderId;
     private String orderName;
-    private int orderQuantity; //quantidade obrigatória
+    private int orderQuantity;
 
     private Long stockId;
-    private int stockQuantity; //quantidade por satisfazer
+    private int stockQuantity;
 
 
 

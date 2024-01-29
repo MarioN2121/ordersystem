@@ -1,10 +1,8 @@
 package com.innotech.ordersystem.service;
 
 import com.innotech.ordersystem.model.EmailSend;
-import com.innotech.ordersystem.model.Order;
 import com.innotech.ordersystem.repository.EmailSendRepository;
 import com.innotech.ordersystem.utils.EmailStatus;
-import com.innotech.ordersystem.utils.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;

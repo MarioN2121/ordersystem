@@ -52,6 +52,4 @@ public class OrderController {
         orderServiceImpl.remover(id);
     }
 
-    //TODO ... ACRESCENTAR MAIS METODOS PARA AS OPERAÇOES DE ORDER(COMPRA)
-
 }

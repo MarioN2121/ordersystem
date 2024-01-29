@@ -14,7 +14,6 @@ import java.util.Optional;
 @RequestMapping("/stocks")
 public class StockController {
 
-
     @Autowired
     private StockServiceImpl stockServiceImpl;
 

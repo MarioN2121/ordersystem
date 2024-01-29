@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data()
